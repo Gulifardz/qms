@@ -1,0 +1,29 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .form-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        .custom-form {
+            width: 450px;
+            max-width: 450px;
+            align-self: center;
+        }
+
+        .register-wrapper, .login-wrapper {
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            bottom: 1.25rem;
+            padding: .25rem;
+        }
+    }
+}

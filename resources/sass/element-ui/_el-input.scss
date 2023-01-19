@@ -1,0 +1,82 @@
+.el-input {
+    &.custom {
+        &.el-input--large {
+            height: $large-input-height; 
+            line-height: $large-input-height;
+
+            .el-input__wrapper {
+                .el-input__inner {
+                    font-size: .825rem;
+        
+                    &::placeholder {
+                        font-size: .8rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.el-select {
+    &.custom {
+        &.el-select--large {
+            .el-input--large {
+                height: $large-input-height; 
+                line-height: $large-input-height;
+    
+                .el-input__wrapper {
+                    .el-input__inner {
+                        font-size: .825rem;
+            
+                        &::placeholder {
+                            font-size: .8rem;
+                        }
+                    }
+                }
+            }           
+        }
+
+        .el-select__input {
+            font-size: .825rem;
+        
+            &::placeholder {
+                font-size: .8rem;
+            }
+        }
+    }
+}
+
+
+.el-textarea {
+    &.custom {
+        .el-textarea__inner {
+            font-size: .825rem;
+    
+            &::placeholder {
+                font-size: .8rem;
+            }
+        }
+    }   
+}
+
+
+.el-input-number {
+    &.custom {
+        &.el-input-number--large {
+            height: $large-input-height; 
+            line-height: $large-input-height;
+
+            .el-input__wrapper {
+                .el-input__inner {
+                    font-size: .825rem;
+                    text-align: unset;
+        
+                    &::placeholder {
+                        font-size: .8rem;
+                    }
+                }
+            }
+        }
+    }
+}

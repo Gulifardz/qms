@@ -1,0 +1,103 @@
+.el-table {
+    $table-header-border-color: #ebeef5;
+
+    &.custom {
+        background-color: #fff !important;
+        font-size: .8rem;
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: 4fr 1fr 1fr 1fr 2fr 1fr;
+            column-gap: 1rem;
+        }
+
+        .el-table__header, .el-table__body {
+            tr:hover > td {
+                background-color: unset !important;
+            }
+
+            .el-table__cell {
+                padding: .75rem 1rem !important;
+                
+                &.is-sortable {
+                    .cell {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                }
+    
+                .cell {
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
+                }
+            }
+        }
+
+        // for table layout fixed
+        .el-table__header {
+            .el-table__cell {
+                background-color: #F8FAFC !important;
+                border-top: 1px solid $table-header-border-color;
+                border-bottom: 1px solid $table-header-border-color;
+                color: #6c757d;
+            }
+        }
+
+        // for table layout auto
+        .el-table__body {
+            thead {
+                .el-table__cell {
+                    background-color: #F8FAFC !important;
+                    border-top: 1px solid $table-header-border-color;
+                    border-bottom: 1px solid $table-header-border-color;
+                    color: #6c757d;
+                }
+            }
+        }
+
+        .el-table__empty-block {
+            padding: .25rem 0;
+        }
+    }
+
+    &.record {
+        .el-table__header, .el-table__body {
+            tr:hover > td {
+                background-color: unset !important;
+            }
+
+            th.el-table__cell {
+                .cell {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            td.el-table__cell {
+                padding: 0 !important;
+    
+                .cell {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0 !important;
+
+                    .el-input {
+                        .el-input__wrapper {
+                            border-radius: 0 !important;
+                            box-shadow: unset !important;
+                            
+                            .el-input__inner {
+                                text-align: center !important;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}

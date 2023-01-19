@@ -1,0 +1,30 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Fontawesome
+@import "~font-awesome/scss/font-awesome.scss";
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@import './global';
+
+@import './auth';
+
+// @import './registration';
+@import './main-content';
+@import './dashboard';
+
+// @import './scanner';
+
+// element ui customization
+@import './element-ui/el-form';
+@import './element-ui/el-button';
+@import './element-ui/el-card';
+@import './element-ui/el-table';
+@import './element-ui/el-steps';
+@import './element-ui/el-input';
+@import './element-ui/el-pagination';

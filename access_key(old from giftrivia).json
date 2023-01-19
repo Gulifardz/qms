@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "galvanic-portal-329711",
+  "private_key_id": "0b70ac5031b5e9a5b816a80c3d17b9a899e32358",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCl7586LW1nRyZl\nGoKT1yS6reuv17rDYdCHVEfNpxzdbl8+qL0LUvSJymLN8nsV6OOWDQglb+utmFPn\nkWh45z9txv3Ig5Le5L7ye/2tHOWo2/Ycs8xLmmY/3vpeF6NfF7W4SXdUqUDM/BUC\nTEH5AJphiwA/lSykiSws0SCQ1UTfcPps6+c2feiYpfL9Ty+ChLyU01Yjuw10jOoc\nSXIw3f3zFMdfn6Islwz4ejWCkApwni0eV8AbVOsrWt9TuNQ6HlXWqE1rr/hF6tuL\n4pPuTo5RMnlHmrjdKyLr1QDm45d3ukImnL/ddRcrUxXWAbHgjVRdZ8lNUh29xq/A\nDRkOGmPfAgMBAAECggEART8DDo8oiaHadvSiKznr/O9ZXI9FRAXMtLzKHhsv44QM\nwSQ/h7s9i0bnBpS7IsCGQPb9QEo9arsXwJogo9u0z4XsIEIwB04kFSMDELvvZxEr\n2nx5s88h/mN5zcxFhAhr8BTQdIcRILnNtqDGIzhKNIyCNQZ2k88enTFESsyFKkza\nXpDnmFMDR5h2d4hKOAlq9NOQCohdAET5ChlQUAt0W167cCsIqThnp9RSGQNczuhe\njGqQRoVTRkOxk2p0HAXYA3FsS85pmPk21c3bJNOIibMAGks3p7PM9ivgjndEytuX\nC21DjNKgR0Hvn/NnusPIYt/mTllDPSNru1k+g2TZiQKBgQDPNf0ZleNxwL/ImhX7\nxRmn+8Uzi8dnxnTcLrjduVOxgdkle5NNxOplRiaqTgUmcntbHEgm28ZH8l2qaJZk\n1BOA/DiRAVDI9WR16+GNdqGKDSbvGj+MehVXNp+c2YxKHPwDPda+hYtqikRGBw7Q\n/JEiAq/qGvixaPS3dhGQHneZQwKBgQDNAbdEFQrLNo4Ea+ckGtbgO6bCVrldIV5e\nFMgrBIeztXhWQk3KCS3/3F+2jPBNxefpF9BL6T9zJEGC/kkp96eNxFw/+ZvWRiL4\nvl9QXxuKuh9ixq/zqco9szwpN94LQkVwsC1Tl9yr8mhpVLDtbpmN8MrTPbLBEW2I\ndh4TjxajNQKBgQCz+cWzYmAiHnO1rjgn7UNih6j6I494UISR9jb1xpGuHQVZrCL+\nqmmYuzy8MXYBte/06/SzY7KuLRI0ABGY1Cd4ohoTwJvFYHb4gX/wWjjm6pOFnDvU\nLPm6PaSXHNHgUZqGykBqTR4R1LSGSn0RAj6g1sqqwPB/T5U2gGOy1PO2dwKBgQC+\nkgvE9DKWeV5Hae7yNyjsRUddfLTPiAdrObJhmtJzEgyNUxFw8Fucb0ViM13nTkOp\nAQQWrPrYlCl6Fdv5cUiGlrSSm/xrkcNMq9t6oQ6/RQmMDtrdjUZ9WLJiNpborHBU\nstFP1enCxZKd56aY8Kk5s084UzBqHUNPCU4oLGmEyQKBgFwgNHEWxX1v50GFDKFj\nq8Svf9XsR2/xy6DY95EEEWAA5jzwVpdyo//kf+rb2ErlyswruCgqQACr9ZUOk7Fl\nqNV8JEWSOTywLHO+6C0Ffes/dSiNrmnpH0sSmWoUwxJT7TmJ7Jb7vIvrHp3QaOY8\n0JaEFSd1TLsc6AKw470PH0sq\n-----END PRIVATE KEY-----\n",
+  "client_email": "gcs-service-account@galvanic-portal-329711.iam.gserviceaccount.com",
+  "client_id": "106948312860399234933",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gcs-service-account%40galvanic-portal-329711.iam.gserviceaccount.com",
+}

@@ -1,0 +1,10 @@
+{
+    "allowOutsideClick": false,
+    "allowEscapeKey": false,
+    "reverseButtons": true,
+    "cancelButtonColor": "#909399",
+    "customClass": {
+        "confirmButton": "shadow-none",
+        "cancelButton": "shadow-none"
+    }
+}

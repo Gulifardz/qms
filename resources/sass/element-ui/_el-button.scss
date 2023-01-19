@@ -1,0 +1,25 @@
+.el-button {
+    &.custom-sm {
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 0.25rem 0.5rem !important;
+        box-shadow: 0 4px 6px rgb(30 31 57 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+        height: auto;
+        line-height: 1.5;
+    }
+
+    &.custom-md {
+        border: unset;
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 4px 6px rgb(30 31 57 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+        height: auto;
+        line-height: 1.5;
+    }
+
+    &.custom {
+        height: $large-input-height;
+        line-height: $large-input-height;
+        font-size: .825rem;
+    }
+}

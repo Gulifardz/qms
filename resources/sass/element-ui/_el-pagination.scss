@@ -1,0 +1,9 @@
+.el-pagination {
+    &.is-background {
+        .btn-next, .btn-prev, .el-pager li {
+            &.is-active {
+                background-color: $oa-color !important;
+            }
+        }
+    }
+}
