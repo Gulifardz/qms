@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\QuarryController;
@@ -44,6 +45,12 @@ Route::prefix('registration')->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->middleware('is_admin')->group(function () {
+    // Dashboard
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [ DashboardController::class, 'index' ]);
+        Route::post('/reports', [ DashboardController::class, 'reports' ]);
+    });
+
     // Quarries
     Route::prefix('quarries')->group(function () {
         Route::get('/', [ QuarryController::class, 'index' ]);
@@ -106,6 +113,11 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/edit/{id}', [ SupermityController::class, 'edit' ]);
         Route::post('/update/{id}', [ SupermityController::class, 'update' ]);
         Route::get('/destroy/{id}', [ SupermityController::class, 'destroy' ]);
+    });
+
+    // Logs
+    Route::prefix('logs')->group(function () {
+        Route::get('/monthly-revenue', [ LogController::class, 'monthly_revenue' ]);
     });
 });
 
@@ -197,8 +209,7 @@ Route::prefix('checker')->middleware('is_checker')->group(function () {
     // scanner
     Route::prefix('scanner')->group(function () {
         Route::get('/', [ LogController::class, 'scanner' ]);
-        Route::post('/select', [ LogController::class, 'select' ]);
-        Route::post('/details', [ LogController::class, 'details' ]);
+        Route::post('/truck-details', [ LogController::class, 'truck_details' ]);
     });
 });
 
@@ -213,13 +224,14 @@ Route::prefix('supermity')->middleware('is_supermity')->group(function () {
         Route::get('/', [ LogController::class, 'index' ]);
         Route::post('/list', [ LogController::class, 'list' ]);
         Route::post('/store', [ LogController::class, 'store' ]);
+        Route::post('/update/{log_id}', [ LogController::class, 'update' ]);
     });
 
     // scanner
     Route::prefix('scanner')->group(function () {
         Route::get('/', [ LogController::class, 'scanner' ]);
-        Route::post('/select', [ LogController::class, 'select' ]);
-        Route::post('/details', [ LogController::class, 'details' ]);
+        Route::post('/truck-details', [ LogController::class, 'truck_details' ]);
+        Route::post('/product-details', [ LogController::class, 'product_details' ]);
     });
 });
 

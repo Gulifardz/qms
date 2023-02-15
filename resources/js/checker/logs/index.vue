@@ -29,65 +29,36 @@
                                 <!-- Details -->
                                 <el-table-column type="expand">
                                     <template #default="scope">
-                                        <!-- Header -->
-                                        <div class="products-grid header px-4 pb-2">
-                                            <div class="fw-bold">Product</div>
-                                            <div class="fw-bold">Quantity</div>
-                                            <div class="fw-bold">Price</div>
-                                            <div class="fw-bold">Extraction Fee</div>
-                                            <div class="fw-bold">Road Maintenance Fee</div>
-                                            <div class="fw-bold">Total</div>
-                                        </div>
+                                        <div class="px-5 grid" style="--bs-gap: .25rem;">
+                                            <!-- Header -->
+                                            <div class="g-col-3 fw-bold">Product</div>
+                                            <div class="g-col-2 fw-bold">Price</div>
+                                            <div class="g-col-2 fw-bold">Extraction Fee</div>
+                                            <div class="g-col-3 fw-bold">Road Maintenance Fee</div>
+                                            <div class="g-col-2 fw-bold text-end">Total</div>
 
-                                        <!-- Body Computation -->
-                                        <div class="products-grid body px-4" v-for="(product) in scope.row.bought" :key="product.id">
-                                            <!-- Product -->
-                                            <div class="text-muted m-0">{{ product.product.name }}</div>
-                                            
-                                            <!-- Quantity -->
-                                            <div class="text-muted m-0">x{{ product.quantity }}</div>
+                                            <!-- Body -->
+                                            <div class="g-col-3 fw-bold">{{ scope.row.product.name }}</div>
+                                            <div class="g-col-2">&#8369;{{ scope.row.price.toFixed(2) }}</div>
+                                            <div class="g-col-2">&#8369;{{ scope.row.ef.toFixed(2) }}</div>
+                                            <div class="g-col-3">&#8369;{{ scope.row.rmf.toFixed(2) }}</div>
+                                            <div class="g-col-2 text-end">&#8369;{{ compute({ product: scope.row, keyword: 'total' }).toFixed(2) }}</div>
 
-                                            <!-- Price -->
-                                            <div class="text-muted m-0">&#8369;{{ product.price.toFixed(2) }}</div>
+                                            <!-- Capacity -->
+                                            <div class="g-start-10 fw-bold text-end mt-4">Capacity</div>
+                                            <div class="g-start-11 text-end fw-bold mt-4">&#215;</div>
+                                            <div class="g-start-12 text-end border-2 border-bottom border-dark mt-4">{{ scope.row.truck.capacity }}</div>
 
-                                            <!-- Extraction Fee -->
-                                            <div class="text-muted m-0">&#8369;{{ product.ef.toFixed(2) + ' x ' + product.capacity }}</div>
+                                            <!-- Product Cost -->
+                                            <div class="g-col-3 g-start-10 text-end">&#8369;{{ compute({ product: scope.row, keyword: 'product-cost' }).toFixed(2) }}</div>
 
-                                            <!-- Road Maintenance Fee -->
-                                            <div class="text-muted m-0">&#8369;{{ product.rmf.toFixed(2) + ' x ' + product.capacity }}</div>
+                                            <!-- System Fee -->
+                                            <div class="g-start-10 fw-bold text-end">System Fee</div>
+                                            <div class="g-start-11 text-end fw-bold">&#x2B;</div>
+                                            <div class="g-start-12 text-end border-2 border-bottom border-dark">{{ scope.row.truck.truck__category.otf.toFixed(2) }}</div>
 
-                                            <!-- Total -->
-                                            <div class="text-muted m-0">&#8369;{{ getPerProductTotal(product).toFixed(2) }}</div>
-                                        </div>
-
-                                        <!-- Footer Computation -->
-                                        <div class="products-grid body px-4 mt-2">
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0 fw-bold">Products Cost:</div>
-                                            <div class="m-0">&#8369;{{ getProductCost(scope.row.bought).toFixed(2) }}</div>
-                                        </div>
-
-                                        <!-- Footer Computation -->
-                                        <div class="products-grid body px-4">
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0 fw-bold">System Fee:</div>
-                                            <div class="m-0">&#8369;{{ scope.row.truck.truck__category.otf.toFixed(2) }}</div>
-                                        </div>
-
-                                        <!-- Footer Computation -->
-                                        <div class="products-grid body px-4 mt-3">
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0"></div>
-                                            <div class="m-0 fw-bold">Total Cost:</div>
-                                            <div class="m-0">&#8369;{{ (getProductCost(scope.row.bought) +  scope.row.truck.truck__category.otf).toFixed(2) }}</div>
+                                            <!-- Total Cost -->
+                                            <div class="g-col-2 g-start-11 text-end mt-2 fw-bold">&#8369;{{ compute({ product: scope.row, keyword: 'total-cost' }).toFixed(2) }}</div>
                                         </div>
                                     </template>
                                 </el-table-column>
@@ -138,7 +109,7 @@
                                 <el-table-column label="Status">
                                     <template #default="scope">
                                         <div class="d-flex flex-column" v-if="scope.row.check_out !== null">
-                                            <el-tag type="success">Checked</el-tag>
+                                            <el-tag type="success">Approved</el-tag>
                                         </div>
                                         <div v-else>
                                             <el-tag type="warning">Pending for checking...</el-tag>
@@ -216,25 +187,14 @@
             viewScanner () {
                 window.open('/checker/scanner', '_blank');
             },
-            getPerProductTotal (product) {
-                const totalPrice = product.price * product.quantity;
-                const totalEF = product.ef * product.capacity;
-                const totalRMF = product.rmf * product.capacity;
-
-                return totalPrice + totalEF + totalRMF;
-            },
-            getProductCost (products) {
-                let cost = 0;
-
-                products.forEach(product => {
-                    const totalPrice = product.price * product.quantity;
-                    const totalEF = product.ef * product.capacity;
-                    const totalRMF = product.rmf * product.capacity;
-
-                    cost += (totalPrice + totalEF + totalRMF);
-                });
-                
-                return cost;
+            compute (param = { product: {}, keyword: '' }) {
+                if (param.keyword === 'total') {
+                    return (param.product.price + param.product.ef + param.product.rmf);
+                } else if (param.keyword === 'product-cost') {
+                    return (param.product.price + param.product.ef + param.product.rmf) * param.product.truck.capacity;
+                } else if (param.keyword === 'total-cost') {
+                    return ((param.product.price + param.product.ef + param.product.rmf) * param.product.truck.capacity) + param.product.truck.truck__category.otf;
+                }
             },
         },
     }

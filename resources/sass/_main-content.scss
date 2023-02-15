@@ -98,16 +98,6 @@
                 background-size: 50px 50px;
                 padding: 1rem;
             }
-
-            .products-grid {
-                display: grid;
-                grid-template-columns: 3fr 1fr 1fr 1fr 2fr 2fr;
-                column-gap: 2rem;
-
-                &.header {
-                    border-bottom: 2px solid black;
-                }
-            }
         }
     }
 }

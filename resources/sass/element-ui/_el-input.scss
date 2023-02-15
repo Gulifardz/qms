@@ -80,3 +80,17 @@
         }
     }
 }
+
+
+.el-range-editor {
+    &.custom {
+        &.el-range-editor--large {
+            height: $large-input-height; 
+            line-height: $large-input-height;
+
+            .el-range-input {
+                font-size: .825rem;
+            }
+        }
+    }
+}

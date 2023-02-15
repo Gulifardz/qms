@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ScannedSuccessfully;
 use Illuminate\Http\Request;
 use App\Models\Log;
-use App\Models\QuarryCompany;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Driver;
-use App\Models\Truck;
 use App\Models\TruckDriver;
 use App\Models\Checker;
 use App\Models\QuarryProduct;
+use Illuminate\Support\Facades\DB;
 
 class LogController extends Controller
 {
@@ -39,7 +36,7 @@ class LogController extends Controller
 
     // list (backend)
     public function list (Request $request) {
-        $logs = Log::with(['company', 'Truck.Truck_Category', 'driver', 'quarry', 'checker', 'supermity', 'Bought.Product']);
+        $logs = Log::with(['company', 'Truck.Truck_Category', 'driver', 'quarry', 'checker', 'supermity', 'product']);
 
         if (Auth::guard('supermity')->check()) {
             $logs = $logs->where('supermity_id', Auth::guard('supermity')->user()->id);
@@ -85,17 +82,11 @@ class LogController extends Controller
         $status = 422;
 
         if (Auth::guard('supermity')->check()) {
-            $log = new Log([
-                'supermity_id' => Auth::guard('supermity')->user()->id,
-                'company_id' => $request->company_id,
-                'quarry_id' => Auth::guard('supermity')->user()->quarry_id,
-                'driver_id' => $request->driver_id,
-                'truck_id' => $request->truck_id,
-            ]);
+            $request['supermity_id'] = Auth::guard('supermity')->user()->id;
+            $request['quarry_id'] = Auth::guard('supermity')->user()->quarry_id;
 
+            $log = new Log($request->all());
             $log->save();
-
-            ScannedSuccessfully::dispatch($log->id, $request);
 
             if ($log) {
                 $data = [];
@@ -108,15 +99,34 @@ class LogController extends Controller
 
 
     // update (backend)
-    public function update ($log_id) {
+    public function update (Request $request, $log_id) {
         $data = [ 'status' => 'Failed Query' ];
         $status = 422;
 
         if (Auth::guard('checker')->check()) {
             $log = Log::where('id', $log_id)->first();
+
+            if ($request->has('rejected')) {
+                $log->update([
+                    'checker_comment' => $request->comment,
+                    'status' => 422
+                ]);
+            } else {
+                $log->update([
+                    'checker_id' => Auth::guard('checker')->user()->id,
+                    'check_out' => now()
+                ]);
+            }
+
+            if ($log) {
+                $data = [];
+                $status = 200;
+            }
+        } else if (Auth::guard('supermity')->check()) {
+            $log = Log::where('id', $log_id)->first();
             $log->update([
-                'checker_id' => Auth::guard('checker')->user()->id,
-                'check_out' => now()
+                'checker_comment' => null,
+                'status' => null
             ]);
 
             if ($log) {
@@ -165,36 +175,28 @@ class LogController extends Controller
     }
 
 
-    // select product
-    public function select (Request $request) {
-        $product = QuarryProduct::with(['product'])
-            ->where('quarry_id', Auth::guard('supermity')->user()->quarry_id)
-            ->where('product_id', $request->product_id)
-            ->first();
-        
-        // $product['supermity_id'] = Auth::guard('supermity')->user()->id;
-        // $product['company_id'] = $request->company_id;
-        // $product['quarry_id'] = Auth::guard('supermity')->user()->quarry_id;
-        // $product['driver_id'] = $request->driver_id;
-        // $product['truck_id'] = $request->truck_id;
-        $product['quantity'] = $request->quantity;
-
-        return response()->json(['product' => $product], 200);
-    }
-
-
     // truck details
-    public function details (Request $request) {
+    public function truck_details (Request $request) {
+        $data = ['status' => 'No Result'];
+        $status = 422;
+
         if (Auth::guard('supermity')->check()) {
-            $log = Log::where('company_id', $request->company_id)
+            $log = Log::with(['company', 'driver', 'Truck.Truck_Category', 'quarry', 'supermity'])
+                ->where('company_id', $request->company_id)
                 ->where('driver_id', $request->driver_id)
+                ->where('quarry_id', Auth::guard('supermity')->user()->quarry_id)
                 ->where('checker_id', null)
                 ->where('check_out', null)
                 ->first();
 
             if ($log) {
                 $data = ['status' => 'Pending'];
-                $status = 422;  
+                $status = 422; 
+
+                if ($log->status !== null) {
+                    $data = ['details' => $log];
+                    $status = 200;    
+                }
             } else {
                 $details = TruckDriver::with(['driver', 'company', 'Truck.Truck_Category'])
                     ->where('company_id', $request->company_id)
@@ -208,10 +210,7 @@ class LogController extends Controller
             }
             
         } else if (Auth::guard('checker')->check()) {
-            $data = ['status' => 'No Result'];
-            $status = 422;
-
-            $details = Log::with(['Bought.Product', 'company', 'Truck.Truck_Category', 'driver'])
+            $details = Log::with(['company', 'Truck.Truck_Category', 'driver', 'product'])
                 ->where('checker_id', null)
                 ->where('company_id', $request->company_id)
                 ->where('driver_id', $request->driver_id)
@@ -226,5 +225,34 @@ class LogController extends Controller
         }
         
         return response()->json($data, $status);
+    }
+
+
+    // product details
+    public function product_details (Request $request) {
+        if (Auth::guard('supermity')->check()) {
+            $product = QuarryProduct::where('product_id', $request->product_id)
+                ->where('quarry_id', Auth::guard('supermity')->user()->id)
+                ->first();
+        }
+        
+        return response()->json(['product' => $product], 200);
+    }
+
+
+    // month revenue
+    public function monthly_revenue () {
+        if (Auth::guard('web')->check()) {
+            $months = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];
+            $lyr = []; // last years revenue
+            $tyr = []; // this years revenue
+
+            foreach ($months as $key => $month) {
+                $lyr[$key] = Log::whereMonth('check_out', $month)->whereYear('check_out', now()->year - 1)->get();
+                $tyr[$key] = Log::whereMonth('check_out', $month)->whereYear('check_out', now()->year)->get();
+            }
+        }
+
+        return response()->json([$lyr, $tyr], 200);
     }
 }

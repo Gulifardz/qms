@@ -18,7 +18,7 @@ class isLoggedIn
     public function handle(Request $request, Closure $next)
     {
         if (Auth::guard('web')->check()) {
-            return redirect('/admin/quarries');
+            return redirect('/admin/dashboard');
         } else if (Auth::guard('company')->check()) {
             return redirect('/company/drivers');
         } else if (Auth::guard('quarry')->check()) {

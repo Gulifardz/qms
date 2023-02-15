@@ -125,6 +125,8 @@ app.component('my-header', MyHeader);
 app.component('login-page', auth.Login);
 app.component('registration', auth.Registration);
 
+app.component('admin-dashboard', admin.Dashboard);
+
 app.component('admin-quarries', admin.QuarriesIndex);
 app.component('admin-quarry-form', admin.QuarryForm);
 app.component('admin-quarry-companies', admin.QuarryCompanies);

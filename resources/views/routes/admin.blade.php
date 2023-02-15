@@ -1,5 +1,9 @@
+{{-- Dashboard --}}
+@if ($resource === 'dashboard')
+    <admin-dashboard />
+
 {{-- Quarries --}}
-@if ($resource === 'quarries')
+@elseif ($resource === 'quarries')
     <admin-quarries />
 @elseif ($resource === 'quarry-form')
     <admin-quarry-form quarry="{{ $quarry }}" />

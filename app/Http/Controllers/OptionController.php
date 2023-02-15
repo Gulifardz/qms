@@ -25,10 +25,7 @@ class OptionController extends Controller
             }
         } else if (Auth::guard('supermity')->check()) {
             $products = $products->whereIn('id', 
-                QuarryProduct::where('quarry_id', Auth::guard('supermity')->user()->quarry_id)
-                    ->whereNotIn('product_id', $request->selected)
-                    ->pluck('product_id')
-                    ->toArray());
+                QuarryProduct::where('quarry_id', Auth::guard('supermity')->user()->quarry_id)->pluck('product_id')->toArray());
         }
 
         $products = $products->orderBy('name')->get();

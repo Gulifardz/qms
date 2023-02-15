@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Truck;
+use App\Models\TruckCategory;
 
 class Log extends Model
 {
@@ -14,12 +16,20 @@ class Log extends Model
         'checker_id',
         'company_id',
         'quarry_id',
-        'driver_id',
         'truck_id',
+        'driver_id',
+        'product_id',
+        'price',
+        'ef',
+        'rmf',
+        'status',
+        'checker_comment',
         'check_out',
     ];
 
-    protected $casts = [];
+    protected $appends = [
+        'total_amount'
+    ];
 
 
     protected $hidden = [
@@ -27,6 +37,16 @@ class Log extends Model
         'updated_at',
         'deleted_at'
     ];
+
+
+    // get total amount attribute
+    public function getTotalAmountAttribute () {
+        $truck = Truck::with(['truck_category'])->where('id', $this->truck_id)->first();
+        $category = TruckCategory::where('id', $this->truck_id)->first();
+        $capacity = $truck->capacity;
+
+        return (($this->price + $this->ef + $this->rmf) * $capacity) + $category->otf;
+    }
 
 
     // filter data based on search
@@ -76,8 +96,8 @@ class Log extends Model
     }
 
 
-    // get associated bought
-    public function bought () {
-        return $this->hasMany(BoughtProduct::class, 'log_id', 'id');
+    // get associated product
+    public function product () {
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 }

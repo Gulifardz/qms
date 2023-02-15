@@ -21,6 +21,12 @@ class CreateLogsTable extends Migration
             $table->integer('quarry_id');
             $table->integer('truck_id');
             $table->integer('driver_id');
+            $table->integer('product_id');
+            $table->double('price', 10, 2);
+            $table->double('ef', 10, 2)->comment('Extraction Fee');
+            $table->double('rmf', 10, 2)->comment('Road Maintenance Fee');
+            $table->integer('status')->nullable();
+            $table->string('checker_comment')->nullable();
             $table->datetime('check_out')->nullable();
             $table->timestamps();
         });

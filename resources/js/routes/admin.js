@@ -1,3 +1,5 @@
+import Dashboard from '../admin/dashboard';
+
 import QuarriesIndex from '../admin/quarries/index';
 import QuarryForm from '../admin/quarries/form';
 import QuarryCompanies from '../admin/quarries/companies';
@@ -16,6 +18,7 @@ import SupermityForm from '../admin/supermities/form';
 import TruckCategoriesIndex from '../admin/truck-categories/index';
 
 export {
+    Dashboard,
     QuarriesIndex, QuarryForm, QuarryCompanies,
     CompaniesIndex, CompanyForm,
     TruckCategoriesIndex,

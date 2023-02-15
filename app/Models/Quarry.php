@@ -57,4 +57,10 @@ class Quarry extends Authenticatable
     public function quarry_product () {
         return $this->hasMany(QuarryProduct::class);
     }
+
+
+    // associated logs
+    public function logs () {
+        return $this->hasMany(Log::class);
+    }
 }

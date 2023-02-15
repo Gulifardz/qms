@@ -4,6 +4,14 @@
             <i class="fa fa-building fa-3x fa-flip-horizontal text-white" aria-hidden="true"></i>
         </div>
 
+        <!-- Admin Dashboard -->
+        <div class="nav-item" v-if="$root.user.type === 'Admin'">
+            <a href="/admin/dashboard" class="px-5 py-3 nav-link" :class="{ 'active': page === 'Dashboard' }">
+                <i class="fa fa-tachometer"></i>
+                <span class="ms-3">Dashboard</span>
+            </a>
+        </div>
+
         <!-- Admin Quarries -->
         <div class="nav-item" v-if="$root.user.type === 'Admin'">
             <a href="/admin/quarries" class="px-5 py-3 nav-link" :class="{ 'active': page === 'Quarries' }">
